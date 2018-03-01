@@ -7,7 +7,7 @@ using namespace std;
 string line;         // read line buffer
 #define CFG_READ(x) cfgRead(line, #x, x)
 
-static void parse(const string &line, string &name, string &value) {
+inline static void parse(const string &line, string &name, string &value) {
 	regex pattern("\\s?(\\w+)\\s+(.*)");
 	smatch match; // match result
 	if ( regex_match(line, match, pattern) ) {
@@ -22,7 +22,7 @@ static void parse(const string &line, string &name, string &value) {
 	}
 }
 
-static void parseArray(const string &in, vector<string> &element) {
+inline static void parseArray(const string &in, vector<string> &element) {
 	smatch match;
 	regex pattern("([0-9-.A-Za-z]+)");
 	string str = in;
@@ -35,7 +35,7 @@ static void parseArray(const string &in, vector<string> &element) {
 	}
 }
 
-static bool matchBool(const string &in) {
+inline static bool matchBool(const string &in) {
 	// match case insensitive string
 	regex patTrue ("\\s*true\\s*" , regex_constants::icase);
 	regex patFalse("\\s*false\\s*", regex_constants::icase);
