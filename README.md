@@ -3,3 +3,4 @@
 * MinGW-w64 `7.2.0` above.(win) / mingw 7.2.0 `x86_64-w64-mingw32-g++-posix` above.(linux)
 
 # [ConfigMaker](https://gist.github.com/adahbingee/33e539264dc4e23dbddb5776bf25a1c1)
+A Clang based front-end C++/C preprocessor for auto generating configuration headers.
