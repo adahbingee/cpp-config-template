@@ -8,7 +8,7 @@
 1. edit [`src/config/config.cpp`](src/config/config.cpp), the supported config types are describe in [ConfigManager](https://github.com/adahbingee/config-manager)
 1. run [`gen-config.bat`](gen-config.bat)
 1. edit [`makefile`](makefile) as needed
-1. compile code use `make`
+1. compile code use `make` or `mingw32-make`
 
 # Reference
 
