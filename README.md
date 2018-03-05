@@ -7,6 +7,7 @@
 
 1. edit `src/config/config.cpp`, the supported config types are describe in [ConfigManager](https://github.com/adahbingee/config-manager)
 1. run `gen-config.bat`
+1. edit `makefile` as needed
 1. compile code use `make`
 
 # Reference
