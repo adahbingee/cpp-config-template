@@ -19,7 +19,7 @@ DCOMPILE_FLAGS =
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH) -I./include/
 # General linker settings
-LINK_FLAGS =
+LINK_FLAGS = -s
 
 # static link
 #LINK_FLAGS  = -fopenmp -static -static-libgcc -static-libstdc++
