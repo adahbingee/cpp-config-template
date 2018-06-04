@@ -6,8 +6,8 @@ private:
 	ConfigManager();
 	~ConfigManager();
 public:
-	static bool read(const char *fileName = "config.txt");
-	static bool write(const char *fileName = "config.txt");
+	static bool read(const char *fileName);
+	static bool write(const char *fileName);
 	static void print();
 };
 
