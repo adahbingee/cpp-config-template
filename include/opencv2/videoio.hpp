@@ -164,12 +164,7 @@ enum VideoCaptureProperties {
        CAP_PROP_IRIS          =36,
        CAP_PROP_SETTINGS      =37, //!< Pop up video/camera filter dialog (note: only supported by DSHOW backend currently. The property value is ignored)
        CAP_PROP_BUFFERSIZE    =38,
-       CAP_PROP_AUTOFOCUS     =39,
-       CAP_PROP_SAR_NUM       =40, //!< Sample aspect ratio: num/den (num)
-       CAP_PROP_SAR_DEN       =41, //!< Sample aspect ratio: num/den (den)
-#ifndef CV_DOXYGEN
-       CV__CAP_PROP_LATEST
-#endif
+       CAP_PROP_AUTOFOCUS     =39
      };
 
 
@@ -789,7 +784,7 @@ public:
     `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
     @endcode
     The returned value might be different from what really used by the device or it could be encoded
-    using device dependent rules (eg. steps or percentage). Effective behaviour depends from device
+    using device dependant rules (eg. steps or percentage). Effective behaviour depends from device
     driver and API Backend
 
     */
