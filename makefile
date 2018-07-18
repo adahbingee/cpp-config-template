@@ -11,7 +11,7 @@ SRC_PATH = ./src
 # Space-separated pkg-config libraries used by this project
 LIBS = 
 # General compiler flags
-COMPILE_FLAGS = -std=c++14 -O3 -Ofast -Wall
+COMPILE_FLAGS = -fopenmp -std=c++14 -O3 -Ofast -Wall
 # Additional release-specific flags
 RCOMPILE_FLAGS =
 # Additional debug-specific flags
