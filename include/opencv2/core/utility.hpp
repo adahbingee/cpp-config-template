@@ -124,7 +124,7 @@ public:
     //! the default constructor
     AutoBuffer();
     //! constructor taking the real buffer size
-    AutoBuffer(size_t _size);
+    explicit AutoBuffer(size_t _size);
 
     //! the copy constructor
     AutoBuffer(const AutoBuffer<_Tp, fixed_size>& buf);
@@ -182,13 +182,6 @@ extern "C" typedef int (*ErrorCallback)( int status, const char* func_name,
 */
 CV_EXPORTS ErrorCallback redirectError( ErrorCallback errCallback, void* userdata=0, void** prevUserdata=0);
 
-/** @brief Returns a text string formatted using the printf-like expression.
-
-The function acts like sprintf but forms and returns an STL string. It can be used to form an error
-message in the Exception constructor.
-@param fmt printf-compatible formatting specifiers.
- */
-CV_EXPORTS String format( const char* fmt, ... );
 CV_EXPORTS String tempfile( const char* suffix = 0);
 CV_EXPORTS void glob(String pattern, std::vector<String>& result, bool recursive = false);
 
@@ -233,6 +226,8 @@ CV_EXPORTS_W int getNumThreads();
 /** @brief Returns the index of the currently executed thread within the current parallel region. Always
 returns 0 if called outside of parallel region.
 
+@deprecated Current implementation doesn't corresponding to this documentation.
+
 The exact meaning of the return value depends on the threading framework used by OpenCV library:
 - `TBB` - Unsupported with current 4.1 TBB release. Maybe will be supported in future.
 - `OpenMP` - The thread number, within the current team, of the calling thread.
@@ -251,6 +246,23 @@ compiler flags, enabled modules and third party libraries, etc. Output format de
 architecture.
  */
 CV_EXPORTS_W const String& getBuildInformation();
+
+/** @brief Returns library version string
+
+For example "3.4.1-dev".
+
+@sa getMajorVersion, getMinorVersion, getRevisionVersion
+*/
+CV_EXPORTS_W String getVersionString();
+
+/** @brief Returns major library version */
+CV_EXPORTS_W int getVersionMajor();
+
+/** @brief Returns minor library version */
+CV_EXPORTS_W int getVersionMinor();
+
+/** @brief Returns revision field of the library version */
+CV_EXPORTS_W int getVersionRevision();
 
 /** @brief Returns the number of ticks.
 
@@ -427,6 +439,12 @@ in OpenCV.
  */
 CV_EXPORTS_W bool checkHardwareSupport(int feature);
 
+/** @brief Returns feature name by ID
+
+Returns empty string if feature is not defined
+*/
+CV_EXPORTS_W String getHardwareFeatureName(int feature);
+
 /** @brief Returns the number of logical CPUs available for the process.
  */
 CV_EXPORTS_W int getNumberOfCPUs();
@@ -523,7 +541,7 @@ public:
         m_functor(functor)
     { }
 
-    virtual void operator() (const cv::Range& range) const
+    virtual void operator() (const cv::Range& range) const CV_OVERRIDE
     {
         m_functor(range);
     }
@@ -557,7 +575,8 @@ void Mat::forEach_impl(const Functor& operation) {
         virtual ~PixelOperationWrapper(){}
         // ! Overloaded virtual operator
         // convert range call to row call.
-        virtual void operator()(const Range &range) const {
+        virtual void operator()(const Range &range) const CV_OVERRIDE
+        {
             const int DIMS = mat->dims;
             const int COLS = mat->size[DIMS - 1];
             if (DIMS <= 2) {
@@ -710,8 +729,8 @@ public:
     inline void cleanup() { TLSDataContainer::cleanup(); }
 
 private:
-    virtual void* createDataInstance() const {return new T;}                // Wrapper to allocate data by template
-    virtual void  deleteDataInstance(void* pData) const {delete (T*)pData;} // Wrapper to release data by template
+    virtual void* createDataInstance() const CV_OVERRIDE {return new T;}                // Wrapper to allocate data by template
+    virtual void  deleteDataInstance(void* pData) const CV_OVERRIDE {delete (T*)pData;} // Wrapper to release data by template
 
     // Disable TLS copy operations
     TLSData(TLSData &) {}
@@ -909,7 +928,7 @@ public:
 
     /** @brief Check for parsing errors
 
-    Returns true if error occurred while accessing the parameters (bad conversion, missing arguments,
+    Returns false if error occurred while accessing the parameters (bad conversion, missing arguments,
     etc.). Call @ref printErrors to print error messages list.
      */
     bool check() const;

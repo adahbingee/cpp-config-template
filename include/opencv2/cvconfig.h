@@ -49,13 +49,13 @@
 /* C= */
 /* #undef HAVE_CSTRIPES */
 
-/* NVidia Cuda Basic Linear Algebra Subprograms (BLAS) API*/
+/* NVIDIA CUDA Basic Linear Algebra Subprograms (BLAS) API*/
 /* #undef HAVE_CUBLAS */
 
-/* NVidia Cuda Runtime API*/
+/* NVIDIA CUDA Runtime API*/
 /* #undef HAVE_CUDA */
 
-/* NVidia Cuda Fast Fourier Transform (FFT) API*/
+/* NVIDIA CUDA Fast Fourier Transform (FFT) API*/
 /* #undef HAVE_CUFFT */
 
 /* IEEE1394 capturing support */
@@ -125,12 +125,12 @@
 /* #undef HAVE_LIBV4L */
 
 /* Microsoft Media Foundation Capture library */
-/* #undef HAVE_MSMF */
+#define HAVE_MSMF
 
-/* NVidia Video Decoding API*/
+/* NVIDIA Video Decoding API*/
 /* #undef HAVE_NVCUVID */
 
-/* NVidia Video Encoding API*/
+/* NVIDIA Video Encoding API*/
 /* #undef HAVE_NVCUVENC */
 
 /* OpenCL Support */

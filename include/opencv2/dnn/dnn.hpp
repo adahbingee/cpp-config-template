@@ -46,9 +46,9 @@
 #include <opencv2/core.hpp>
 
 #if !defined CV_DOXYGEN && !defined CV_DNN_DONT_ADD_EXPERIMENTAL_NS
-#define CV__DNN_EXPERIMENTAL_NS_BEGIN namespace experimental_dnn_v3 {
+#define CV__DNN_EXPERIMENTAL_NS_BEGIN namespace experimental_dnn_v5 {
 #define CV__DNN_EXPERIMENTAL_NS_END }
-namespace cv { namespace dnn { namespace experimental_dnn_v3 { } using namespace experimental_dnn_v3; }}
+namespace cv { namespace dnn { namespace experimental_dnn_v5 { } using namespace experimental_dnn_v5; }}
 #else
 #define CV__DNN_EXPERIMENTAL_NS_BEGIN
 #define CV__DNN_EXPERIMENTAL_NS_END
@@ -66,25 +66,34 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
 
     /**
      * @brief Enum of computation backends supported by layers.
+     * @see Net::setPreferableBackend
      */
     enum Backend
     {
+        //! DNN_BACKEND_DEFAULT equals to DNN_BACKEND_INFERENCE_ENGINE if
+        //! OpenCV is built with Intel's Inference Engine library or
+        //! DNN_BACKEND_OPENCV otherwise.
         DNN_BACKEND_DEFAULT,
-        DNN_BACKEND_HALIDE
+        DNN_BACKEND_HALIDE,
+        DNN_BACKEND_INFERENCE_ENGINE,
+        DNN_BACKEND_OPENCV
     };
 
     /**
      * @brief Enum of target devices for computations.
+     * @see Net::setPreferableTarget
      */
     enum Target
     {
         DNN_TARGET_CPU,
-        DNN_TARGET_OPENCL
+        DNN_TARGET_OPENCL,
+        DNN_TARGET_OPENCL_FP16,
+        DNN_TARGET_MYRIAD
     };
 
     /** @brief This class provides all data needed to initialize layer.
      *
-     * It includes dictionary with scalar params (which can be readed by using Dict interface),
+     * It includes dictionary with scalar params (which can be read by using Dict interface),
      * blob params #blobs and optional meta information: #name and #type of layer instance.
     */
     class CV_EXPORTS LayerParams : public Dict
@@ -135,7 +144,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
          * Initialize wrapper from another one. It'll wrap the same host CPU
          * memory and mustn't allocate memory on device(i.e. GPU). It might
          * has different shape. Use in case of CPU memory reusing for reuse
-         * associented memory on device too.
+         * associated memory on device too.
          */
         BackendWrapper(const Ptr<BackendWrapper>& base, const MatShape& shape);
 
@@ -221,7 +230,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
         /** @brief Returns index of output blob in output array.
          *  @see inputNameToIndex()
          */
-        virtual int outputNameToIndex(String outputName);
+        CV_WRAP virtual int outputNameToIndex(const String& outputName);
 
         /**
          * @brief Ask layer if it support specific backend for doing computations.
@@ -241,6 +250,8 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
          * Halide tests will be failed).
          */
         virtual Ptr<BackendNode> initHalide(const std::vector<Ptr<BackendWrapper> > &inputs);
+
+        virtual Ptr<BackendNode> initInfEngine(const std::vector<Ptr<BackendWrapper> > &inputs);
 
        /**
         * @brief Automatic Halide scheduling based on layer hyper-parameters.
@@ -278,20 +289,26 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
         virtual bool setActivation(const Ptr<ActivationLayer>& layer);
 
         /**
-         * @brief Tries to attach to the layer the subsequent batch normalization layer, i.e. do the layer fusion in a partial case.
-         * @param[in] layer The subsequent batch normalization layer.
-         *
-         * Returns true if the batch normalization layer has been attached successfully.
+         * @brief Try to fuse current layer with a next one
+         * @param[in] top Next layer to be fused.
+         * @returns True if fusion was performed.
          */
-        virtual bool setBatchNorm(const Ptr<BatchNormLayer>& layer);
+        virtual bool tryFuse(Ptr<Layer>& top);
 
         /**
-         * @brief Tries to attach to the layer the subsequent scaling layer, i.e. do the layer fusion in a partial case.
-         * @param[in] layer The subsequent scaling layer.
+         * @brief Returns parameters of layers with channel-wise multiplication and addition.
+         * @param[out] scale Channel-wise multipliers. Total number of values should
+         *                   be equal to number of channels.
+         * @param[out] shift Channel-wise offsets. Total number of values should
+         *                   be equal to number of channels.
          *
-         * Returns true if the scaling layer has been attached successfully.
+         * Some layers can fuse their transformations with further layers.
+         * In example, convolution + batch normalization. This way base layer
+         * use weights from layer after it. Fused layer is skipped.
+         * By default, @p scale and @p shift are empty that means layer has no
+         * element-wise multiplications or additions.
          */
-        virtual bool setScale(const Ptr<ScaleLayer>& layer);
+        virtual void getScaleShift(Mat& scale, Mat& shift) const;
 
         /**
          * @brief "Deattaches" all the layers, attached to particular layer.
@@ -331,6 +348,14 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
 
         CV_WRAP Net();  //!< Default constructor.
         CV_WRAP ~Net(); //!< Destructor frees the net only if there aren't references to the net anymore.
+
+        /** @brief Create a network from Intel's Model Optimizer intermediate representation.
+         *  @param[in] xml XML configuration file with network's topology.
+         *  @param[in] bin Binary file with trained weights.
+         *  Networks imported from Intel's Model Optimizer are launched in Intel's Inference Engine
+         *  backend.
+         */
+        CV_WRAP static Net readFromModelOptimizer(const String& xml, const String& bin);
 
         /** Returns true if there are no layers in the network. */
         CV_WRAP bool empty() const;
@@ -383,8 +408,8 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
 
         /** @brief Connects #@p outNum output of the first layer to #@p inNum input of the second layer.
          *  @param outLayerId identifier of the first layer
-         *  @param inpLayerId identifier of the second layer
          *  @param outNum number of the first layer output
+         *  @param inpLayerId identifier of the second layer
          *  @param inpNum number of the second layer input
          */
         void connect(int outLayerId, int outNum, int inpLayerId, int inpNum);
@@ -441,6 +466,9 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
          * @brief Ask network to use specific computation backend where it supported.
          * @param[in] backendId backend identifier.
          * @see Backend
+         *
+         * If OpenCV is compiled with Intel's Inference Engine library, DNN_BACKEND_DEFAULT
+         * means DNN_BACKEND_INFERENCE_ENGINE. Otherwise it equals to DNN_BACKEND_OPENCV.
          */
         CV_WRAP void setPreferableBackend(int backendId);
 
@@ -448,6 +476,14 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
          * @brief Ask network to make computations on specific target device.
          * @param[in] targetId target identifier.
          * @see Target
+         *
+         * List of supported combinations backend / target:
+         * |                        | DNN_BACKEND_OPENCV | DNN_BACKEND_INFERENCE_ENGINE | DNN_BACKEND_HALIDE |
+         * |------------------------|--------------------|------------------------------|--------------------|
+         * | DNN_TARGET_CPU         |                  + |                            + |                  + |
+         * | DNN_TARGET_OPENCL      |                  + |                            + |                  + |
+         * | DNN_TARGET_OPENCL_FP16 |                  + |                            + |                    |
+         * | DNN_TARGET_MYRIAD      |                    |                            + |                    |
          */
         CV_WRAP void setPreferableTarget(int targetId);
 
@@ -545,7 +581,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
          */
         CV_WRAP int getLayersCount(const String& layerType) const;
 
-        /** @brief Computes bytes number which are requered to store
+        /** @brief Computes bytes number which are required to store
          * all weights and intermediate blobs for model.
          * @param netInputShapes vector of shapes for all net inputs.
          * @param weights output parameter to store resulting bytes for weights.
@@ -565,7 +601,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
                                           const MatShape& netInputShape,
                                           CV_OUT size_t& weights, CV_OUT size_t& blobs) const;
 
-        /** @brief Computes bytes number which are requered to store
+        /** @brief Computes bytes number which are required to store
          * all weights and intermediate blobs for each layer.
          * @param netInputShapes vector of shapes for all net inputs.
          * @param layerIds output vector to save layer IDs.
@@ -674,10 +710,45 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
      */
      CV_EXPORTS_W Net readNetFromTorch(const String &model, bool isBinary = true);
 
+     /**
+      * @brief Read deep learning network represented in one of the supported formats.
+      * @param[in] model Binary file contains trained weights. The following file
+      *                  extensions are expected for models from different frameworks:
+      *                  * `*.caffemodel` (Caffe, http://caffe.berkeleyvision.org/)
+      *                  * `*.pb` (TensorFlow, https://www.tensorflow.org/)
+      *                  * `*.t7` | `*.net` (Torch, http://torch.ch/)
+      *                  * `*.weights` (Darknet, https://pjreddie.com/darknet/)
+      *                  * `*.bin` (DLDT, https://software.intel.com/openvino-toolkit)
+      * @param[in] config Text file contains network configuration. It could be a
+      *                   file with the following extensions:
+      *                  * `*.prototxt` (Caffe, http://caffe.berkeleyvision.org/)
+      *                  * `*.pbtxt` (TensorFlow, https://www.tensorflow.org/)
+      *                  * `*.cfg` (Darknet, https://pjreddie.com/darknet/)
+      *                  * `*.xml` (DLDT, https://software.intel.com/openvino-toolkit)
+      * @param[in] framework Explicit framework name tag to determine a format.
+      * @returns Net object.
+      *
+      * This function automatically detects an origin framework of trained model
+      * and calls an appropriate function such @ref readNetFromCaffe, @ref readNetFromTensorflow,
+      * @ref readNetFromTorch or @ref readNetFromDarknet. An order of @p model and @p config
+      * arguments does not matter.
+      */
+     CV_EXPORTS_W Net readNet(const String& model, const String& config = "", const String& framework = "");
+
     /** @brief Loads blob which was serialized as torch.Tensor object of Torch7 framework.
      *  @warning This function has the same limitations as readNetFromTorch().
      */
     CV_EXPORTS_W Mat readTorchBlob(const String &filename, bool isBinary = true);
+
+    /** @brief Load a network from Intel's Model Optimizer intermediate representation.
+     *  @param[in] xml XML configuration file with network's topology.
+     *  @param[in] bin Binary file with trained weights.
+     *  @returns Net object.
+     *  Networks imported from Intel's Model Optimizer are launched in Intel's Inference Engine
+     *  backend.
+     */
+    CV_EXPORTS_W Net readNetFromModelOptimizer(const String &xml, const String &bin);
+
     /** @brief Creates 4-dimensional blob from image. Optionally resizes and crops @p image from center,
      *  subtract @p mean values, scales values by @p scalefactor, swap Blue and Red channels.
      *  @param image input image (with 1-, 3- or 4-channels).
@@ -688,13 +759,23 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
      *  @param swapRB flag which indicates that swap first and last channels
      *  in 3-channel image is necessary.
      *  @param crop flag which indicates whether image will be cropped after resize or not
-     *  @details if @p crop is true, input image is resized so one side after resize is equal to corresponing
+     *  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
      *  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
      *  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
-     *  @returns 4-dimansional Mat with NCHW dimensions order.
+     *  @returns 4-dimensional Mat with NCHW dimensions order.
      */
     CV_EXPORTS_W Mat blobFromImage(InputArray image, double scalefactor=1.0, const Size& size = Size(),
                                    const Scalar& mean = Scalar(), bool swapRB=true, bool crop=true);
+
+    /** @brief Creates 4-dimensional blob from image.
+     *  @details This is an overloaded member function, provided for convenience.
+     *           It differs from the above function only in what argument(s) it accepts.
+     */
+    CV_EXPORTS void blobFromImage(InputArray image, OutputArray blob, double scalefactor=1.0,
+                                  const Size& size = Size(), const Scalar& mean = Scalar(),
+                                  bool swapRB=true, bool crop=true);
+
+
     /** @brief Creates 4-dimensional blob from series of images. Optionally resizes and
      *  crops @p images from center, subtract @p mean values, scales values by @p scalefactor,
      *  swap Blue and Red channels.
@@ -706,13 +787,31 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
      *  @param swapRB flag which indicates that swap first and last channels
      *  in 3-channel image is necessary.
      *  @param crop flag which indicates whether image will be cropped after resize or not
-     *  @details if @p crop is true, input image is resized so one side after resize is equal to corresponing
+     *  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
      *  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
      *  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
      *  @returns 4-dimansional Mat with NCHW dimensions order.
      */
-    CV_EXPORTS_W Mat blobFromImages(const std::vector<Mat>& images, double scalefactor=1.0,
+    CV_EXPORTS_W Mat blobFromImages(InputArrayOfArrays images, double scalefactor=1.0,
                                     Size size = Size(), const Scalar& mean = Scalar(), bool swapRB=true, bool crop=true);
+
+    /** @brief Creates 4-dimensional blob from series of images.
+     *  @details This is an overloaded member function, provided for convenience.
+     *           It differs from the above function only in what argument(s) it accepts.
+     */
+    CV_EXPORTS void blobFromImages(InputArrayOfArrays images, OutputArray blob,
+                                   double scalefactor=1.0, Size size = Size(),
+                                   const Scalar& mean = Scalar(), bool swapRB=true, bool crop=true);
+
+    /** @brief Parse a 4D blob and output the images it contains as 2D arrays through a simpler data structure
+     *  (std::vector<cv::Mat>).
+     *  @param[in] blob_ 4 dimensional array (images, channels, height, width) in floating point precision (CV_32F) from
+     *  which you would like to extract the images.
+     *  @param[out] images_ array of 2D Mat containing the images extracted from the blob in floating point precision
+     *  (CV_32F). They are non normalized neither mean added. The number of returned images equals the first dimension
+     *  of the blob (batch size). Every image has a number of channels equals to the second dimension of the blob (depth).
+     */
+    CV_EXPORTS_W void imagesFromBlob(const cv::Mat& blob_, OutputArrayOfArrays images_);
 
     /** @brief Convert all weights of Caffe network to half precision floating point.
      * @param src Path to origin model from Caffe framework contains single
@@ -745,6 +844,10 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
                                CV_OUT std::vector<int>& indices,
                                const float eta = 1.f, const int top_k = 0);
 
+    CV_EXPORTS void NMSBoxes(const std::vector<RotatedRect>& bboxes, const std::vector<float>& scores,
+                             const float score_threshold, const float nms_threshold,
+                             CV_OUT std::vector<int>& indices,
+                             const float eta = 1.f, const int top_k = 0);
 
 //! @}
 CV__DNN_EXPERIMENTAL_NS_END

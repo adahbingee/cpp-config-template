@@ -91,7 +91,7 @@ compensate for the differences in the size of areas. The sums of pixel values ov
 regions are calculated rapidly using integral images (see below and the integral description).
 
 To see the object detector at work, have a look at the facedetect demo:
-<https://github.com/opencv/opencv/tree/master/samples/cpp/dbt_face_detection.cpp>
+<https://github.com/opencv/opencv/tree/3.4/samples/cpp/dbt_face_detection.cpp>
 
 The following reference is for the detection part only. There is a separate application called
 opencv_traincascade that can train a cascade of boosted classifiers from a set of samples.
@@ -175,7 +175,7 @@ class CV_EXPORTS_W BaseCascadeClassifier : public Algorithm
 {
 public:
     virtual ~BaseCascadeClassifier();
-    virtual bool empty() const = 0;
+    virtual bool empty() const CV_OVERRIDE = 0;
     virtual bool load( const String& filename ) = 0;
     virtual void detectMultiScale( InputArray image,
                            CV_OUT std::vector<Rect>& objects,
@@ -346,7 +346,7 @@ struct DetectionROI
 {
    //! scale(size) of the bounding box
    double scale;
-   //! set of requrested locations to be evaluated
+   //! set of requested locations to be evaluated
    std::vector<cv::Point> locations;
    //! vector that will contain confidence values for each location
    std::vector<double> confidences;
@@ -497,11 +497,11 @@ public:
     @param foundLocations Vector of point where each point contains left-top corner point of detected object boundaries.
     @param weights Vector that will contain confidence values for each detected object.
     @param hitThreshold Threshold for the distance between features and SVM classifying plane.
-    Usually it is 0 and should be specfied in the detector coefficients (as the last free coefficient).
+    Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
     But if the free coefficient is omitted (which is allowed), you can specify it manually here.
     @param winStride Window stride. It must be a multiple of block stride.
     @param padding Padding
-    @param searchLocations Vector of Point includes set of requrested locations to be evaluated.
+    @param searchLocations Vector of Point includes set of requested locations to be evaluated.
     */
     CV_WRAP virtual void detect(const Mat& img, CV_OUT std::vector<Point>& foundLocations,
                         CV_OUT std::vector<double>& weights,
@@ -513,7 +513,7 @@ public:
     @param img Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
     @param foundLocations Vector of point where each point contains left-top corner point of detected object boundaries.
     @param hitThreshold Threshold for the distance between features and SVM classifying plane.
-    Usually it is 0 and should be specfied in the detector coefficients (as the last free coefficient).
+    Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
     But if the free coefficient is omitted (which is allowed), you can specify it manually here.
     @param winStride Window stride. It must be a multiple of block stride.
     @param padding Padding
@@ -530,7 +530,7 @@ public:
     @param foundLocations Vector of rectangles where each rectangle contains the detected object.
     @param foundWeights Vector that will contain confidence values for each detected object.
     @param hitThreshold Threshold for the distance between features and SVM classifying plane.
-    Usually it is 0 and should be specfied in the detector coefficients (as the last free coefficient).
+    Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
     But if the free coefficient is omitted (which is allowed), you can specify it manually here.
     @param winStride Window stride. It must be a multiple of block stride.
     @param padding Padding
@@ -548,7 +548,7 @@ public:
     @param img Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
     @param foundLocations Vector of rectangles where each rectangle contains the detected object.
     @param hitThreshold Threshold for the distance between features and SVM classifying plane.
-    Usually it is 0 and should be specfied in the detector coefficients (as the last free coefficient).
+    Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
     But if the free coefficient is omitted (which is allowed), you can specify it manually here.
     @param winStride Window stride. It must be a multiple of block stride.
     @param padding Padding
@@ -632,7 +632,7 @@ public:
     @param foundLocations Vector of Point where each Point is detected object's top-left point.
     @param confidences confidences
     @param hitThreshold Threshold for the distance between features and SVM classifying plane. Usually
-    it is 0 and should be specfied in the detector coefficients (as the last free coefficient). But if
+    it is 0 and should be specified in the detector coefficients (as the last free coefficient). But if
     the free coefficient is omitted (which is allowed), you can specify it manually here
     @param winStride winStride
     @param padding padding
@@ -646,7 +646,7 @@ public:
     @param img Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
     @param foundLocations Vector of rectangles where each rectangle contains the detected object.
     @param locations Vector of DetectionROI
-    @param hitThreshold Threshold for the distance between features and SVM classifying plane. Usually it is 0 and should be specfied
+    @param hitThreshold Threshold for the distance between features and SVM classifying plane. Usually it is 0 and should be specified
     in the detector coefficients (as the last free coefficient). But if the free coefficient is omitted (which is allowed), you can specify it manually here.
     @param groupThreshold Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
     */
@@ -669,6 +669,14 @@ public:
     */
     void groupRectangles(std::vector<cv::Rect>& rectList, std::vector<double>& weights, int groupThreshold, double eps) const;
 };
+
+/** @brief Detect QR code in image and return minimum area of quadrangle that describes QR code.
+    @param in  Matrix of the type CV_8UC1 containing an image where QR code are detected.
+    @param points Output vector of vertices of a quadrangle of minimal area that describes QR code.
+    @param eps_x Epsilon neighborhood, which allows you to determine the horizontal pattern of the scheme 1:1:3:1:1 according to QR code standard.
+    @param eps_y Epsilon neighborhood, which allows you to determine the vertical pattern of the scheme 1:1:3:1:1 according to QR code standard.
+    */
+CV_EXPORTS bool detectQRCode(InputArray in, std::vector<Point> &points, double eps_x = 0.2, double eps_y = 0.1);
 
 //! @} objdetect
 
