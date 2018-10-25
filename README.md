@@ -12,7 +12,7 @@
 
 # bash running
 
-run in different directory, for each directory has its own config.txt
+run in different directory, for each directory has its own `config.txt`
 
 ```bash
 EXE_PATH=D:/workspace/test/out.exe
