@@ -10,6 +10,26 @@
 1. edit [`makefile`](makefile) as needed
 1. compile code use `make` or `mingw32-make`
 
+# bash running
+
+run in different directory, for each directory has its own config.txt
+
+```bash
+EXE_PATH=D:/workspace/test/out.exe
+####################################
+cd D:/run-pool/test/01
+pwd
+$EXE_PATH
+####################################
+cd D:/run-pool/test/02
+pwd
+$EXE_PATH
+####################################
+cd D:/run-pool/test/03
+pwd
+$EXE_PATH
+```
+
 # Reference
 
 ## ConfigMaker
