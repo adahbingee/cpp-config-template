@@ -148,6 +148,12 @@ synonym is needed to generate Python/Java etc. wrappers properly. At the functio
 level their use is similar, but _InputArray::getMat(idx) should be used to get header for the
 idx-th component of the outer vector and _InputArray::size().area() should be used to find the
 number of components (vectors/matrices) of the outer vector.
+
+In general, type support is limited to cv::Mat types. Other types are forbidden.
+But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
+This data is not intented to be interpreted as an image data, or processed somehow like regular cv::Mat.
+To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
+Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
  */
 class CV_EXPORTS _InputArray
 {
@@ -201,6 +207,11 @@ public:
 #ifdef CV_CXX_STD_ARRAY
     template<typename _Tp, std::size_t _Nm> _InputArray(const std::array<_Tp, _Nm>& arr);
     template<std::size_t _Nm> _InputArray(const std::array<Mat, _Nm>& arr);
+#endif
+
+    template<typename _Tp> static _InputArray rawIn(const std::vector<_Tp>& vec);
+#ifdef CV_CXX_STD_ARRAY
+    template<typename _Tp, std::size_t _Nm> static _InputArray rawIn(const std::array<_Tp, _Nm>& arr);
 #endif
 
     Mat getMat(int idx=-1) const;
@@ -339,6 +350,11 @@ public:
     template<std::size_t _Nm> _OutputArray(const std::array<Mat, _Nm>& arr);
 #endif
 
+    template<typename _Tp> static _OutputArray rawOut(std::vector<_Tp>& vec);
+#ifdef CV_CXX_STD_ARRAY
+    template<typename _Tp, std::size_t _Nm> static _OutputArray rawOut(std::array<_Tp, _Nm>& arr);
+#endif
+
     bool fixedSize() const;
     bool fixedType() const;
     bool needed() const;
@@ -408,7 +424,19 @@ public:
     template<std::size_t _Nm> _InputOutputArray(const std::array<Mat, _Nm>& arr);
 #endif
 
+    template<typename _Tp> static _InputOutputArray rawInOut(std::vector<_Tp>& vec);
+#ifdef CV_CXX_STD_ARRAY
+    template<typename _Tp, std::size_t _Nm> _InputOutputArray rawInOut(std::array<_Tp, _Nm>& arr);
+#endif
+
 };
+
+/** Helper to wrap custom types. @see InputArray */
+template<typename _Tp> static inline _InputArray rawIn(_Tp& v);
+/** Helper to wrap custom types. @see InputArray */
+template<typename _Tp> static inline _OutputArray rawOut(_Tp& v);
+/** Helper to wrap custom types. @see InputArray */
+template<typename _Tp> static inline _InputOutputArray rawInOut(_Tp& v);
 
 CV__DEBUG_NS_END
 
@@ -3569,6 +3597,10 @@ CV_EXPORTS MatExpr operator + (const Mat& m, const MatExpr& e);
 CV_EXPORTS MatExpr operator + (const MatExpr& e, const Scalar& s);
 CV_EXPORTS MatExpr operator + (const Scalar& s, const MatExpr& e);
 CV_EXPORTS MatExpr operator + (const MatExpr& e1, const MatExpr& e2);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator + (const Mat& a, const Matx<_Tp, m, n>& b) { return a + Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator + (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) + b; }
 
 CV_EXPORTS MatExpr operator - (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator - (const Mat& a, const Scalar& s);
@@ -3578,6 +3610,10 @@ CV_EXPORTS MatExpr operator - (const Mat& m, const MatExpr& e);
 CV_EXPORTS MatExpr operator - (const MatExpr& e, const Scalar& s);
 CV_EXPORTS MatExpr operator - (const Scalar& s, const MatExpr& e);
 CV_EXPORTS MatExpr operator - (const MatExpr& e1, const MatExpr& e2);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator - (const Mat& a, const Matx<_Tp, m, n>& b) { return a - Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator - (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) - b; }
 
 CV_EXPORTS MatExpr operator - (const Mat& m);
 CV_EXPORTS MatExpr operator - (const MatExpr& e);
@@ -3590,6 +3626,10 @@ CV_EXPORTS MatExpr operator * (const Mat& m, const MatExpr& e);
 CV_EXPORTS MatExpr operator * (const MatExpr& e, double s);
 CV_EXPORTS MatExpr operator * (double s, const MatExpr& e);
 CV_EXPORTS MatExpr operator * (const MatExpr& e1, const MatExpr& e2);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator * (const Mat& a, const Matx<_Tp, m, n>& b) { return a * Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator * (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) * b; }
 
 CV_EXPORTS MatExpr operator / (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator / (const Mat& a, double s);
@@ -3599,52 +3639,100 @@ CV_EXPORTS MatExpr operator / (const Mat& m, const MatExpr& e);
 CV_EXPORTS MatExpr operator / (const MatExpr& e, double s);
 CV_EXPORTS MatExpr operator / (double s, const MatExpr& e);
 CV_EXPORTS MatExpr operator / (const MatExpr& e1, const MatExpr& e2);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator / (const Mat& a, const Matx<_Tp, m, n>& b) { return a / Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator / (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) / b; }
 
 CV_EXPORTS MatExpr operator < (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator < (const Mat& a, double s);
 CV_EXPORTS MatExpr operator < (double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator < (const Mat& a, const Matx<_Tp, m, n>& b) { return a < Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator < (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) < b; }
 
 CV_EXPORTS MatExpr operator <= (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator <= (const Mat& a, double s);
 CV_EXPORTS MatExpr operator <= (double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator <= (const Mat& a, const Matx<_Tp, m, n>& b) { return a <= Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator <= (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) <= b; }
 
 CV_EXPORTS MatExpr operator == (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator == (const Mat& a, double s);
 CV_EXPORTS MatExpr operator == (double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator == (const Mat& a, const Matx<_Tp, m, n>& b) { return a == Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator == (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) == b; }
 
 CV_EXPORTS MatExpr operator != (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator != (const Mat& a, double s);
 CV_EXPORTS MatExpr operator != (double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator != (const Mat& a, const Matx<_Tp, m, n>& b) { return a != Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator != (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) != b; }
 
 CV_EXPORTS MatExpr operator >= (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator >= (const Mat& a, double s);
 CV_EXPORTS MatExpr operator >= (double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator >= (const Mat& a, const Matx<_Tp, m, n>& b) { return a >= Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator >= (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) >= b; }
 
 CV_EXPORTS MatExpr operator > (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator > (const Mat& a, double s);
 CV_EXPORTS MatExpr operator > (double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator > (const Mat& a, const Matx<_Tp, m, n>& b) { return a > Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator > (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) > b; }
 
 CV_EXPORTS MatExpr operator & (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator & (const Mat& a, const Scalar& s);
 CV_EXPORTS MatExpr operator & (const Scalar& s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator & (const Mat& a, const Matx<_Tp, m, n>& b) { return a & Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator & (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) & b; }
 
 CV_EXPORTS MatExpr operator | (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator | (const Mat& a, const Scalar& s);
 CV_EXPORTS MatExpr operator | (const Scalar& s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator | (const Mat& a, const Matx<_Tp, m, n>& b) { return a | Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator | (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) | b; }
 
 CV_EXPORTS MatExpr operator ^ (const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr operator ^ (const Mat& a, const Scalar& s);
 CV_EXPORTS MatExpr operator ^ (const Scalar& s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr operator ^ (const Mat& a, const Matx<_Tp, m, n>& b) { return a ^ Mat(b); }
+template<typename _Tp, int m, int n> static inline
+MatExpr operator ^ (const Matx<_Tp, m, n>& a, const Mat& b) { return Mat(a) ^ b; }
 
 CV_EXPORTS MatExpr operator ~(const Mat& m);
 
 CV_EXPORTS MatExpr min(const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr min(const Mat& a, double s);
 CV_EXPORTS MatExpr min(double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr min (const Mat& a, const Matx<_Tp, m, n>& b) { return min(a, Mat(b)); }
+template<typename _Tp, int m, int n> static inline
+MatExpr min (const Matx<_Tp, m, n>& a, const Mat& b) { return min(Mat(a), b); }
 
 CV_EXPORTS MatExpr max(const Mat& a, const Mat& b);
 CV_EXPORTS MatExpr max(const Mat& a, double s);
 CV_EXPORTS MatExpr max(double s, const Mat& a);
+template<typename _Tp, int m, int n> static inline
+MatExpr max (const Mat& a, const Matx<_Tp, m, n>& b) { return max(a, Mat(b)); }
+template<typename _Tp, int m, int n> static inline
+MatExpr max (const Matx<_Tp, m, n>& a, const Mat& b) { return max(Mat(a), b); }
 
 /** @brief Calculates an absolute value of each matrix element.
 

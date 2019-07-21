@@ -105,9 +105,7 @@
 /* #undef HAVE_IPP */
 /* #undef HAVE_IPP_ICV */
 /* #undef HAVE_IPP_IW */
-
-/* Intel IPP Async */
-/* #undef HAVE_IPP_A */
+/* #undef HAVE_IPP_IW_LL */
 
 /* JPEG-2000 codec */
 /* #undef HAVE_JASPER */
@@ -137,6 +135,9 @@
 #define HAVE_OPENCL
 /* #undef HAVE_OPENCL_STATIC */
 /* #undef HAVE_OPENCL_SVM */
+
+/* NVIDIA OpenCL D3D Extensions support */
+/* #undef HAVE_OPENCL_D3D11_NV */
 
 /* OpenEXR codec */
 /* #undef HAVE_OPENEXR */
@@ -244,5 +245,7 @@
 /* OpenCV trace utilities */
 #define OPENCV_TRACE
 
+/* Library QR-code decoding */
+/* #undef HAVE_QUIRC */
 
 #endif // OPENCV_CVCONFIG_H_INCLUDED
