@@ -8,12 +8,12 @@ string line;         // read line buffer
 #define CFG_READ(x) cfgRead(line, #x, x)
 
 inline static void parse(const string &line, string &name, string &value) {
-	regex pattern("\\s?(\\w+)\\s+(.*)");
+	regex pattern("\\s?(\\w+)\\s+(.*)\\s?");
 	smatch match; // match result
+
 	if ( regex_match(line, match, pattern) ) {
 		name  = match[1];
 		value = match[2];
-
 		// trim trailing spaces
 		size_t endpos = value.find_last_not_of(" \t");
 		if( string::npos != endpos ) {
@@ -47,7 +47,7 @@ inline static bool matchBool(const string &in) {
 	} else if ( regex_match(in, match, patFalse) ) { // match false
 		return false;
 	} else if ( regex_match(in, match, patNum) ) {   // match number
-		return stoi( in );
+		return atoi( in.c_str() );
 	}
 	return false;
 }
@@ -63,7 +63,7 @@ bool cfgRead(const string &line, const string &varName, int (&var)[size]) {
 
 	if ( lineVarName == varName ) {
 		for (size_t i = 0; i < size; ++i) {
-			var[i] = stoi(arr[i]);
+			var[i] = atoi(arr[i].c_str());
 		}
 		return true;
 	} else {
@@ -82,7 +82,7 @@ bool cfgRead(const string &line, const string &varName, float (&var)[size]) {
 
 	if ( lineVarName == varName ) {
 		for (size_t i = 0; i < size; ++i) {
-			var[i] = stof(arr[i]);
+			var[i] = atof(arr[i].c_str());
 		}
 		return true;
 	} else {
@@ -101,7 +101,7 @@ bool cfgRead(const string &line, const string &varName, double (&var)[size]) {
 
 	if ( lineVarName == varName ) {
 		for (size_t i = 0; i < size; ++i) {
-			var[i] = stod(arr[i]);
+			var[i] = atof(arr[i].c_str());
 		}
 		return true;
 	} else {
@@ -148,7 +148,7 @@ bool cfgRead(const string &line, const string &varName, int &var) {
 	string lineVarValue; // variable value buffer
 	parse(line, lineVarName, lineVarValue);
 	if ( lineVarName == varName ) {
-		var = stoi( lineVarValue );
+		var = atoi( lineVarValue.c_str() );
 		return true;
 	} else {
 		return false;
@@ -160,7 +160,7 @@ bool cfgRead(const string &line, const string &varName, float &var) {
 	string lineVarValue; // variable value buffer
 	parse(line, lineVarName, lineVarValue);
 	if ( lineVarName == varName ) {
-		var = stof( lineVarValue );
+		var = atof( lineVarValue.c_str() );
 		return true;
 	} else {
 		return false;
@@ -172,7 +172,7 @@ bool cfgRead(const string &line, const string &varName, double &var) {
 	string lineVarValue; // variable value buffer
 	parse(line, lineVarName, lineVarValue);
 	if ( lineVarName == varName ) {
-		var = stod( lineVarValue );
+		var = atof( lineVarValue.c_str() );
 		return true;
 	} else {
 		return false;
