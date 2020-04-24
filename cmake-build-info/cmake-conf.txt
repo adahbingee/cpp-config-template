@@ -1,45 +1,47 @@
-Could NOT find PythonInterp (missing: PYTHON_EXECUTABLE) (Required is at least version "3.2")
-libjpeg-turbo: VERSION = 2.0.2, BUILD = opencv-3.4.6-libjpeg-turbo
-Could not find OpenBLAS include. Turning OpenBLAS_FOUND off
-Could not find OpenBLAS lib. Turning OpenBLAS_FOUND off
-Could NOT find BLAS (missing: BLAS_LIBRARIES) 
-LAPACK requires BLAS
-A library with LAPACK API not found. Please specify library location.
-OpenCV Python: during development append to PYTHONPATH: C:/Users/game/Downloads/cv/python_loader
+Detected processor: AMD64
+libjpeg-turbo: VERSION = 2.0.4, BUILD = opencv-4.3.0-libjpeg-turbo
+Could NOT find OpenJPEG (minimal suitable version: 2.0, recommended version >= 2.3.1)
+OpenCV Python: during development append to PYTHONPATH: C:/Users/USER/Desktop/cv/python_loader
 Processing WORLD modules...
     module opencv_core...
+Allocator metrics storage type: 'long long'
     module opencv_imgproc...
     module opencv_imgcodecs...
     module opencv_highgui...
 Processing WORLD modules... DONE
-Excluding from source files list: modules/imgproc/src/sumpixels.avx512_skx.cpp
 
-General configuration for OpenCV 3.4.6 =====================================
+General configuration for OpenCV 4.3.0 =====================================
   Version control:               unknown
 
   Platform:
-    Timestamp:                   2019-07-21T05:11:56Z
-    Host:                        Windows 10.0.18362 AMD64
-    CMake:                       3.15.0
+    Timestamp:                   2020-04-24T04:21:14Z
+    Host:                        Windows 10.0.18363 AMD64
+    CMake:                       3.17.1
     CMake generator:             MinGW Makefiles
-    CMake build tool:            C:/mingw64/bin/mingw32-make.exe
+    CMake build tool:            D:/software/msys2/mingw64/bin/mingw32-make.exe
     Configuration:               Release
 
   CPU/HW features:
     Baseline:                    SSE SSE2 SSE3
       requested:                 SSE3
-    Dispatched code generation:  AVX2
-      AVX2 (29 files):           + SSSE3 SSE4_1 POPCNT SSE4_2 FP16 FMA3 AVX AVX2
+    Dispatched code generation:  SSE4_1 SSE4_2 FP16 AVX AVX2 AVX512_SKX
+      requested:                 SSE4_1 SSE4_2 AVX FP16 AVX2 AVX512_SKX
+      SSE4_1 (13 files):         + SSSE3 SSE4_1
+      SSE4_2 (1 files):          + SSSE3 SSE4_1 POPCNT SSE4_2
+      FP16 (0 files):            + SSSE3 SSE4_1 POPCNT SSE4_2 FP16 AVX
+      AVX (3 files):             + SSSE3 SSE4_1 POPCNT SSE4_2 AVX
+      AVX2 (24 files):           + SSSE3 SSE4_1 POPCNT SSE4_2 FP16 FMA3 AVX AVX2
+      AVX512_SKX (2 files):      + SSSE3 SSE4_1 POPCNT SSE4_2 FP16 FMA3 AVX AVX2 AVX_512F AVX512_COMMON AVX512_SKX
 
   C/C++:
     Built as dynamic libs?:      NO
-    C++11:                       YES
-    C++ Compiler:                C:/mingw64/bin/g++.exe  (ver 8.1.0)
-    C++ flags (Release):         -fsigned-char -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffast-math -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fvisibility-inlines-hidden -fopenmp -O3 -DNDEBUG  -DNDEBUG
-    C++ flags (Debug):           -fsigned-char -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffast-math -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fvisibility-inlines-hidden -fopenmp -g  -O0 -DDEBUG -D_DEBUG
-    C Compiler:                  C:/mingw64/bin/gcc.exe
-    C flags (Release):           -fsigned-char -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Winit-self -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffast-math -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fopenmp -O3 -DNDEBUG  -DNDEBUG
-    C flags (Debug):             -fsigned-char -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Winit-self -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffast-math -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fopenmp -g  -O0 -DDEBUG -D_DEBUG
+    C++ standard:                11
+    C++ Compiler:                D:/software/msys2/mingw64/bin/g++.exe  (ver 9.3.0)
+    C++ flags (Release):         -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fvisibility-inlines-hidden -fopenmp -O3 -DNDEBUG  -DNDEBUG
+    C++ flags (Debug):           -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fvisibility-inlines-hidden -fopenmp -g  -O0 -DDEBUG -D_DEBUG
+    C Compiler:                  D:/software/msys2/mingw64/bin/gcc.exe
+    C flags (Release):           -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Winit-self -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fopenmp -O3 -DNDEBUG  -DNDEBUG
+    C flags (Debug):             -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Winit-self -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -Wno-long-long -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -msse3 -fvisibility=hidden -fopenmp -g  -O0 -DDEBUG -D_DEBUG
     Linker flags (Release):      -Wl,--gc-sections  
     Linker flags (Debug):        -Wl,--gc-sections  
     ccache:                      NO
@@ -49,9 +51,9 @@ General configuration for OpenCV 3.4.6 =====================================
 
   OpenCV modules:
     To be built:                 core highgui imgcodecs imgproc world
-    Disabled:                    calib3d features2d flann java_bindings_generator ml objdetect photo python_bindings_generator shape stitching superres video videoio videostab
+    Disabled:                    calib3d features2d flann java_bindings_generator ml objdetect photo python_bindings_generator python_tests stitching video videoio
     Disabled by dependency:      -
-    Unavailable:                 cudaarithm cudabgsegm cudacodec cudafeatures2d cudafilters cudaimgproc cudalegacy cudaobjdetect cudaoptflow cudastereo cudawarping cudev dnn java js python2 python3 ts viz
+    Unavailable:                 dnn gapi java js python2 python3 ts
     Applications:                -
     Documentation:               NO
     Non-free algorithms:         NO
@@ -64,14 +66,15 @@ General configuration for OpenCV 3.4.6 =====================================
 
   Media I/O: 
     ZLib:                        build (ver 1.2.11)
-    JPEG:                        build-libjpeg-turbo (ver 2.0.2-62)
-    PNG:                         build (ver 1.6.36)
+    JPEG:                        build-libjpeg-turbo (ver 2.0.4-62)
+    PNG:                         build (ver 1.6.37)
+    JPEG 2000:                   NO
     HDR:                         NO
     SUNRASTER:                   NO
-    PXM:                         NO
+    PXM:                         YES
+    PFM:                         NO
 
   Video I/O:
-    DC1394:                      NO
     DirectShow:                  YES
 
   Parallel framework:            OpenMP
@@ -79,16 +82,12 @@ General configuration for OpenCV 3.4.6 =====================================
   Trace:                         YES (built-in)
 
   Other third-party libraries:
-    Lapack:                      NO
     Custom HAL:                  NO
 
-  OpenCL:                        YES (no extra features)
-    Include path:                C:/Users/game/Downloads/opencv-3.4.6/3rdparty/include/opencl/1.2
-    Link libraries:              Dynamic load
+  Python (for build):            D:/software/msys2/mingw64/bin/python3.exe
 
-  Python (for build):            C:/Python27/python.exe
-
-  Install to:                    C:/Users/game/Downloads/cv/install
+  Install to:                    C:/Users/USER/Desktop/cv/install
 -----------------------------------------------------------------
 
 Configuring done
+Generating done

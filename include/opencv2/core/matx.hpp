@@ -53,9 +53,7 @@
 #include "opencv2/core/traits.hpp"
 #include "opencv2/core/saturate.hpp"
 
-#ifdef CV_CXX11
 #include <initializer_list>
-#endif
 
 namespace cv
 {
@@ -142,9 +140,7 @@ public:
          _Tp v12, _Tp v13, _Tp v14, _Tp v15); //!< 1x16, 4x4 or 16x1 matrix
     explicit Matx(const _Tp* vals); //!< initialize from a plain array
 
-#ifdef CV_CXX11
     Matx(std::initializer_list<_Tp>); //!< initialize from an initializer list
-#endif
 
     static Matx all(_Tp alpha);
     static Matx zeros();
@@ -362,9 +358,7 @@ public:
     Vec(_Tp v0, _Tp v1, _Tp v2, _Tp v3, _Tp v4, _Tp v5, _Tp v6, _Tp v7, _Tp v8, _Tp v9, _Tp v10, _Tp v11, _Tp v12, _Tp v13); //!< 14-element vector constructor
     explicit Vec(const _Tp* values);
 
-#ifdef CV_CXX11
     Vec(std::initializer_list<_Tp>);
-#endif
 
     Vec(const Vec<_Tp, cn>& v);
 
@@ -390,6 +384,10 @@ public:
     _Tp& operator[](int i);
     const _Tp& operator ()(int i) const;
     _Tp& operator ()(int i);
+
+#ifdef CV_CXX11
+    Vec<_Tp, cn>& operator=(const Vec<_Tp, cn>& rhs) = default;
+#endif
 
     Vec(const Matx<_Tp, cn, 1>& a, const Matx<_Tp, cn, 1>& b, Matx_AddOp);
     Vec(const Matx<_Tp, cn, 1>& a, const Matx<_Tp, cn, 1>& b, Matx_SubOp);
@@ -666,7 +664,6 @@ Matx<_Tp, m, n>::Matx(const _Tp* values)
     for( int i = 0; i < channels; i++ ) val[i] = values[i];
 }
 
-#ifdef CV_CXX11
 template<typename _Tp, int m, int n> inline
 Matx<_Tp, m, n>::Matx(std::initializer_list<_Tp> list)
 {
@@ -677,7 +674,6 @@ Matx<_Tp, m, n>::Matx(std::initializer_list<_Tp> list)
         val[i++] = elem;
     }
 }
-#endif
 
 template<typename _Tp, int m, int n> inline
 Matx<_Tp, m, n> Matx<_Tp, m, n>::all(_Tp alpha)
@@ -1020,11 +1016,9 @@ template<typename _Tp, int cn> inline
 Vec<_Tp, cn>::Vec(const _Tp* values)
     : Matx<_Tp, cn, 1>(values) {}
 
-#ifdef CV_CXX11
 template<typename _Tp, int cn> inline
 Vec<_Tp, cn>::Vec(std::initializer_list<_Tp> list)
     : Matx<_Tp, cn, 1>(list) {}
-#endif
 
 template<typename _Tp, int cn> inline
 Vec<_Tp, cn>::Vec(const Vec<_Tp, cn>& m)
@@ -1273,6 +1267,34 @@ template<typename _Tp, int m, int n> static inline
 Matx<_Tp, m, n> operator * (double alpha, const Matx<_Tp, m, n>& a)
 {
     return Matx<_Tp, m, n>(a, alpha, Matx_ScaleOp());
+}
+
+template<typename _Tp, int m, int n> static inline
+Matx<_Tp, m, n>& operator /= (Matx<_Tp, m, n>& a, float alpha)
+{
+    for( int i = 0; i < m*n; i++ )
+        a.val[i] = a.val[i] / alpha;
+    return a;
+}
+
+template<typename _Tp, int m, int n> static inline
+Matx<_Tp, m, n>& operator /= (Matx<_Tp, m, n>& a, double alpha)
+{
+    for( int i = 0; i < m*n; i++ )
+        a.val[i] = a.val[i] / alpha;
+    return a;
+}
+
+template<typename _Tp, int m, int n> static inline
+Matx<_Tp, m, n> operator / (const Matx<_Tp, m, n>& a, float alpha)
+{
+    return Matx<_Tp, m, n>(a, 1.f/alpha, Matx_ScaleOp());
+}
+
+template<typename _Tp, int m, int n> static inline
+Matx<_Tp, m, n> operator / (const Matx<_Tp, m, n>& a, double alpha)
+{
+    return Matx<_Tp, m, n>(a, 1./alpha, Matx_ScaleOp());
 }
 
 template<typename _Tp, int m, int n> static inline
