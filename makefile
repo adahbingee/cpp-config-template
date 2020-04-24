@@ -11,7 +11,7 @@ SRC_PATH = ./src
 # Space-separated pkg-config libraries used by this project
 LIBS = 
 # General compiler flags
-COMPILE_FLAGS = -fopenmp -std=c++14 -O3 -Ofast -Wall
+COMPILE_FLAGS = -flto -fopenmp -std=c++14 -O3 -Ofast -Wall
 # Additional release-specific flags
 RCOMPILE_FLAGS =
 # Additional debug-specific flags
@@ -20,7 +20,7 @@ DCOMPILE_FLAGS =
 INCLUDES = -I $(SRC_PATH) -I./include/
 # General linker settings
 # static link
-LINK_FLAGS  = -s -fopenmp -static -static-libgcc -static-libstdc++
+LINK_FLAGS  = -flto -s -fopenmp -static -static-libgcc -static-libstdc++
 LINK_FLAGS += -L./staticlib/
 LINK_OBJS   = ./staticlib/libopencv_world430.a
 LINK_OBJS  += ./staticlib/liblibjpeg-turbo.a
