@@ -2,7 +2,6 @@
 # The name of the executable to be created
 BIN_NAME := out.exe
 # Compiler used
-# CXX = x86_64-w64-mingw32-g++-posix
 CXX = g++
 # Extension of source files used in the project
 SRC_EXT = cpp
