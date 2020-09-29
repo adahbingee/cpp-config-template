@@ -5,6 +5,7 @@
 
 
 - [Requirement](#requirement)
+    - [MSYS2 Settings](#msys2-settings)
 - [How to use](#how-to-use)
 - [bash running](#bash-running)
 - [Reference](#reference)
@@ -16,8 +17,19 @@
 # Requirement
 
 * Clang `5.0.0` above environment. [Clang Pre-Built Binaries](http://releases.llvm.org/download.html)
-* MinGW-w64 `7.2.0` above with posix thread model. ( windows )
+* MinGW-w64 `7.2.0` above with posix thread model. ( [my windows build](https://github.com/adahbingee/mingw64/releases) )
+    - Can download from [MSYS2](https://www.msys2.org/) 
 * mingw 7.2.0 `x86_64-w64-mingw32-g++-posix` above. ( linux )
+
+## MSYS2 Settings
+
+[Reference](https://magiclen.org/msys2/)
+
+```bash
+$ pacman -Syu
+$ pacman -Su
+$ pacman -S mingw-w64-x86_64-toolchain
+```
 
 # How to use
 
