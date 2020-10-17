@@ -1,0 +1,317 @@
+Detected processor: x86_64
+Looking for ccache - not found
+Performing Test HAVE_CXX_FFAST_MATH
+Performing Test HAVE_CXX_FFAST_MATH - Success
+Performing Test HAVE_C_FFAST_MATH
+Performing Test HAVE_C_FFAST_MATH - Success
+Performing Test HAVE_CXX_WINCONSISTENT_MISSING_OVERRIDE
+Performing Test HAVE_CXX_WINCONSISTENT_MISSING_OVERRIDE - Success
+Performing Test HAVE_C_WINCONSISTENT_MISSING_OVERRIDE
+Performing Test HAVE_C_WINCONSISTENT_MISSING_OVERRIDE - Success
+AVX512_KNM is not supported by C++ compiler
+Performing Test HAVE_CPU_BASELINE_FLAGS
+Performing Test HAVE_CPU_BASELINE_FLAGS - Success
+Performing Test HAVE_CPU_DISPATCH_FLAGS_SSE4_2
+Performing Test HAVE_CPU_DISPATCH_FLAGS_SSE4_2 - Success
+Performing Test HAVE_CPU_DISPATCH_FLAGS_FP16
+Performing Test HAVE_CPU_DISPATCH_FLAGS_FP16 - Success
+Performing Test HAVE_CPU_DISPATCH_FLAGS_AVX
+Performing Test HAVE_CPU_DISPATCH_FLAGS_AVX - Success
+Performing Test HAVE_CPU_DISPATCH_FLAGS_AVX2
+Performing Test HAVE_CPU_DISPATCH_FLAGS_AVX2 - Success
+Performing Test HAVE_CPU_DISPATCH_FLAGS_AVX512_SKX
+Performing Test HAVE_CPU_DISPATCH_FLAGS_AVX512_SKX - Success
+libjpeg-turbo: VERSION = 2.0.5, BUILD = opencv-3.4.12-libjpeg-turbo
+OpenCV Python: during development append to PYTHONPATH: /Users/songbingyi/Desktop/build/python_loader
+Processing WORLD modules...
+    module opencv_core...
+Allocator metrics storage type: 'int'
+    module opencv_imgproc...
+    module opencv_imgcodecs...
+    module opencv_highgui...
+Processing WORLD modules... DONE
+
+General configuration for OpenCV 3.4.12 =====================================
+  Version control:               unknown
+
+  Platform:
+    Timestamp:                   2020-10-17T13:03:00Z
+    Host:                        Darwin 19.6.0 x86_64
+    CMake:                       3.18.2
+    CMake generator:             Unix Makefiles
+    CMake build tool:            /usr/bin/make
+    Configuration:               Release
+
+  CPU/HW features:
+    Baseline:                    SSE SSE2 SSE3 SSSE3 SSE4_1
+      requested:                 DETECT
+    Dispatched code generation:  SSE4_2 FP16 AVX AVX2 AVX512_SKX
+      requested:                 SSE4_1 SSE4_2 AVX FP16 AVX2 AVX512_SKX
+      SSE4_2 (1 files):          + POPCNT SSE4_2
+      FP16 (0 files):            + POPCNT SSE4_2 FP16 AVX
+      AVX (3 files):             + POPCNT SSE4_2 AVX
+      AVX2 (25 files):           + POPCNT SSE4_2 FP16 FMA3 AVX AVX2
+      AVX512_SKX (2 files):      + POPCNT SSE4_2 FP16 FMA3 AVX AVX2 AVX_512F AVX512_COMMON AVX512_SKX
+
+  C/C++:
+    Built as dynamic libs?:      NO
+    C++11:                       YES
+    C++ Compiler:                /Library/Developer/CommandLineTools/usr/bin/c++  (ver 12.0.0.12000032)
+    C++ flags (Release):         -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Winconsistent-missing-override -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Wno-long-long -Qunused-arguments -Wno-semicolon-before-method-body -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG  -DNDEBUG
+    C++ flags (Debug):           -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Winconsistent-missing-override -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Wno-long-long -Qunused-arguments -Wno-semicolon-before-method-body -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -g  -O0 -DDEBUG -D_DEBUG
+    C Compiler:                  /Library/Developer/CommandLineTools/usr/bin/cc
+    C flags (Release):           -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Winconsistent-missing-override -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Wno-long-long -Qunused-arguments -Wno-semicolon-before-method-body -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG  -DNDEBUG
+    C flags (Debug):             -fsigned-char -ffast-math -W -Wall -Werror=return-type -Werror=non-virtual-dtor -Werror=address -Werror=sequence-point -Wformat -Werror=format-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Winit-self -Winconsistent-missing-override -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Wno-long-long -Qunused-arguments -Wno-semicolon-before-method-body -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -g  -O0 -DDEBUG -D_DEBUG
+    Linker flags (Release):      -Wl,-dead_strip  
+    Linker flags (Debug):        -Wl,-dead_strip  
+    ccache:                      NO
+    Precompiled headers:         NO
+    Extra dependencies:          -framework Cocoa -framework OpenCL /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Accelerate.framework -lm -ldl
+    3rdparty dependencies:       libjpeg-turbo libpng zlib
+
+  OpenCV modules:
+    To be built:                 core highgui imgcodecs imgproc world
+    Disabled:                    calib3d features2d flann java_bindings_generator ml objdetect photo python2 python_bindings_generator python_tests shape stitching superres video videoio videostab
+    Disabled by dependency:      -
+    Unavailable:                 cudaarithm cudabgsegm cudacodec cudafeatures2d cudafilters cudaimgproc cudalegacy cudaobjdetect cudaoptflow cudastereo cudawarping cudev dnn java js python3 python3 ts viz
+    Applications:                -
+    Documentation:               NO
+    Non-free algorithms:         NO
+
+  GUI: 
+    Cocoa:                       YES
+
+  Media I/O: 
+    ZLib:                        build (ver 1.2.11)
+    JPEG:                        build-libjpeg-turbo (ver 2.0.5-62)
+    PNG:                         build (ver 1.6.37)
+    HDR:                         NO
+    SUNRASTER:                   NO
+    PXM:                         YES
+
+  Video I/O:
+    AVFoundation:                NO
+
+  Parallel framework:            GCD
+
+  Trace:                         YES (built-in)
+
+  Other third-party libraries:
+    Custom HAL:                  NO
+
+  OpenCL:                        YES (no extra features)
+    Include path:                NO
+    Link libraries:              -framework OpenCL
+
+  Python (for build):            /usr/bin/python2.7
+
+  Install to:                    /usr/local
+-----------------------------------------------------------------
+
+Configuring done
+Generating done
+
+
+-- Install configuration: "Release"
+-- Installing: /usr/local/include/opencv2/cvconfig.h
+-- Installing: /usr/local/include/opencv2/opencv_modules.hpp
+-- Installing: /usr/local/lib/pkgconfig/opencv.pc
+-- Old export file "/usr/local/share/OpenCV/OpenCVModules.cmake" will be replaced.  Removing files [/usr/local/share/OpenCV/OpenCVModules-release.cmake].
+-- Installing: /usr/local/share/OpenCV/OpenCVModules.cmake
+-- Installing: /usr/local/share/OpenCV/OpenCVModules-release.cmake
+-- Installing: /usr/local/share/OpenCV/OpenCVConfig-version.cmake
+-- Installing: /usr/local/share/OpenCV/OpenCVConfig.cmake
+-- Installing: /usr/local/bin/setup_vars_opencv3.sh
+-- Installing: /usr/local/share/OpenCV/valgrind.supp
+-- Installing: /usr/local/share/OpenCV/valgrind_3rdparty.supp
+-- Installing: /usr/local/share/OpenCV/3rdparty/lib/libzlib.a
+-- Installing: /usr/local/share/licenses/opencv3/zlib-README
+-- Installing: /usr/local/share/OpenCV/3rdparty/lib/liblibjpeg-turbo.a
+-- Installing: /usr/local/share/licenses/opencv3/libjpeg-turbo-README.md
+-- Installing: /usr/local/share/licenses/opencv3/libjpeg-turbo-LICENSE.md
+-- Installing: /usr/local/share/licenses/opencv3/libjpeg-turbo-README.ijg
+-- Installing: /usr/local/share/OpenCV/3rdparty/lib/liblibpng.a
+-- Installing: /usr/local/share/licenses/opencv3/libpng-LICENSE
+-- Installing: /usr/local/share/licenses/opencv3/libpng-README
+-- Installing: /usr/local/include/opencv/cv.h
+-- Installing: /usr/local/include/opencv/cv.hpp
+-- Installing: /usr/local/include/opencv/cvaux.h
+-- Installing: /usr/local/include/opencv/cvaux.hpp
+-- Installing: /usr/local/include/opencv/cvwimage.h
+-- Installing: /usr/local/include/opencv/cxcore.h
+-- Installing: /usr/local/include/opencv/cxcore.hpp
+-- Installing: /usr/local/include/opencv/cxeigen.hpp
+-- Installing: /usr/local/include/opencv/cxmisc.h
+-- Installing: /usr/local/include/opencv/highgui.h
+-- Installing: /usr/local/include/opencv/ml.h
+-- Installing: /usr/local/include/opencv2/opencv.hpp
+-- Installing: /usr/local/share/licenses/opencv3/SoftFloat-COPYING.txt
+-- Installing: /usr/local/lib/libopencv_world.a
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(hal_internal.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(opencl_clamdblas.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(opencl_clamdfft.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(main.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_exr.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_gdal.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_gdcm.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_hdr.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_jpeg2000.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_sunras.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_tiff.cpp.o) has no symbols
+/Library/Developer/CommandLineTools/usr/bin/ranlib: file: /usr/local/lib/libopencv_world.a(grfmt_webp.cpp.o) has no symbols
+-- Installing: /usr/local/include/opencv2/core/opencl/ocl_defs.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/opencl_info.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/opencl_svm.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/autogenerated/opencl_clamdblas.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/autogenerated/opencl_clamdfft.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/autogenerated/opencl_core.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/autogenerated/opencl_core_wrappers.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/autogenerated/opencl_gl.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/autogenerated/opencl_gl_wrappers.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_clamdblas.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_clamdfft.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_core.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_core_wrappers.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_gl.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_gl_wrappers.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_svm_20.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_svm_definitions.hpp
+-- Installing: /usr/local/include/opencv2/core/opencl/runtime/opencl_svm_hsa_extension.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/block.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/border_interpolate.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/color.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/common.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/datamov_utils.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/dynamic_smem.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/emulation.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/filters.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/funcattrib.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/functional.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/limits.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/reduce.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/saturate_cast.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/scan.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/simd_functions.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/transform.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/type_traits.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/utility.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/vec_distance.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/vec_math.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/vec_traits.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/warp.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/warp_reduce.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/warp_shuffle.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/detail/color_detail.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/detail/reduce.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/detail/reduce_key_val.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/detail/transform_detail.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/detail/type_traits_detail.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda/detail/vec_distance_detail.hpp
+-- Installing: /usr/local/include/opencv2/core.hpp
+-- Installing: /usr/local/include/opencv2/core/affine.hpp
+-- Installing: /usr/local/include/opencv2/core/async.hpp
+-- Installing: /usr/local/include/opencv2/core/base.hpp
+-- Installing: /usr/local/include/opencv2/core/bindings_utils.hpp
+-- Installing: /usr/local/include/opencv2/core/bufferpool.hpp
+-- Installing: /usr/local/include/opencv2/core/check.hpp
+-- Installing: /usr/local/include/opencv2/core/core.hpp
+-- Installing: /usr/local/include/opencv2/core/core_c.h
+-- Installing: /usr/local/include/opencv2/core/cuda.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda.inl.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda_stream_accessor.hpp
+-- Installing: /usr/local/include/opencv2/core/cuda_types.hpp
+-- Installing: /usr/local/include/opencv2/core/cv_cpu_dispatch.h
+-- Installing: /usr/local/include/opencv2/core/cv_cpu_helper.h
+-- Installing: /usr/local/include/opencv2/core/cvdef.h
+-- Installing: /usr/local/include/opencv2/core/cvstd.hpp
+-- Installing: /usr/local/include/opencv2/core/cvstd.inl.hpp
+-- Installing: /usr/local/include/opencv2/core/directx.hpp
+-- Installing: /usr/local/include/opencv2/core/eigen.hpp
+-- Installing: /usr/local/include/opencv2/core/fast_math.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/hal.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/interface.h
+-- Installing: /usr/local/include/opencv2/core/hal/intrin.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_avx.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_avx512.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_cpp.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_forward.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_msa.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_neon.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_sse.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_sse_em.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_vsx.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/intrin_wasm.hpp
+-- Installing: /usr/local/include/opencv2/core/hal/msa_macros.h
+-- Installing: /usr/local/include/opencv2/core/hal/simd_utils.impl.hpp
+-- Installing: /usr/local/include/opencv2/core/ippasync.hpp
+-- Installing: /usr/local/include/opencv2/core/mat.hpp
+-- Installing: /usr/local/include/opencv2/core/mat.inl.hpp
+-- Installing: /usr/local/include/opencv2/core/matx.hpp
+-- Installing: /usr/local/include/opencv2/core/neon_utils.hpp
+-- Installing: /usr/local/include/opencv2/core/ocl.hpp
+-- Installing: /usr/local/include/opencv2/core/ocl_genbase.hpp
+-- Installing: /usr/local/include/opencv2/core/opengl.hpp
+-- Installing: /usr/local/include/opencv2/core/operations.hpp
+-- Installing: /usr/local/include/opencv2/core/optim.hpp
+-- Installing: /usr/local/include/opencv2/core/ovx.hpp
+-- Installing: /usr/local/include/opencv2/core/persistence.hpp
+-- Installing: /usr/local/include/opencv2/core/ptr.inl.hpp
+-- Installing: /usr/local/include/opencv2/core/saturate.hpp
+-- Installing: /usr/local/include/opencv2/core/simd_intrinsics.hpp
+-- Installing: /usr/local/include/opencv2/core/softfloat.hpp
+-- Installing: /usr/local/include/opencv2/core/sse_utils.hpp
+-- Installing: /usr/local/include/opencv2/core/traits.hpp
+-- Installing: /usr/local/include/opencv2/core/types.hpp
+-- Installing: /usr/local/include/opencv2/core/types_c.h
+-- Installing: /usr/local/include/opencv2/core/utility.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/allocator_stats.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/allocator_stats.impl.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/filesystem.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/instrumentation.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/logger.defines.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/logger.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/tls.hpp
+-- Installing: /usr/local/include/opencv2/core/utils/trace.hpp
+-- Installing: /usr/local/include/opencv2/core/va_intel.hpp
+-- Installing: /usr/local/include/opencv2/core/version.hpp
+-- Installing: /usr/local/include/opencv2/core/vsx_utils.hpp
+-- Installing: /usr/local/include/opencv2/core/wimage.hpp
+-- Installing: /usr/local/include/opencv2/core/detail/async_promise.hpp
+-- Installing: /usr/local/include/opencv2/core/detail/exception_ptr.hpp
+-- Installing: /usr/local/include/opencv2/imgproc.hpp
+-- Installing: /usr/local/include/opencv2/imgproc/hal/hal.hpp
+-- Installing: /usr/local/include/opencv2/imgproc/hal/interface.h
+-- Installing: /usr/local/include/opencv2/imgproc/imgproc.hpp
+-- Installing: /usr/local/include/opencv2/imgproc/imgproc_c.h
+-- Installing: /usr/local/include/opencv2/imgproc/types_c.h
+-- Installing: /usr/local/include/opencv2/imgproc/detail/distortion_model.hpp
+-- Installing: /usr/local/include/opencv2/imgcodecs.hpp
+-- Installing: /usr/local/include/opencv2/imgcodecs/imgcodecs.hpp
+-- Installing: /usr/local/include/opencv2/imgcodecs/imgcodecs_c.h
+-- Installing: /usr/local/include/opencv2/imgcodecs/ios.h
+-- Installing: /usr/local/include/opencv2/highgui.hpp
+-- Installing: /usr/local/include/opencv2/highgui/highgui.hpp
+-- Installing: /usr/local/include/opencv2/highgui/highgui_c.h
+-- Installing: /usr/local/include/opencv2/world.hpp
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_eye.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_eye_tree_eyeglasses.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_frontalcatface.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_frontalcatface_extended.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt2.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt_tree.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_fullbody.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_lefteye_2splits.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_licence_plate_rus_16stages.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_lowerbody.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_profileface.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_righteye_2splits.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_russian_plate_number.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_smile.xml
+-- Installing: /usr/local/share/OpenCV/haarcascades/haarcascade_upperbody.xml
+-- Installing: /usr/local/share/OpenCV/lbpcascades/lbpcascade_frontalcatface.xml
+-- Installing: /usr/local/share/OpenCV/lbpcascades/lbpcascade_frontalface.xml
+-- Installing: /usr/local/share/OpenCV/lbpcascades/lbpcascade_frontalface_improved.xml
+-- Installing: /usr/local/share/OpenCV/lbpcascades/lbpcascade_profileface.xml
+-- Installing: /usr/local/share/OpenCV/lbpcascades/lbpcascade_silverware.xml

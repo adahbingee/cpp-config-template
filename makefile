@@ -10,7 +10,7 @@ SRC_PATH = ./src
 # Space-separated pkg-config libraries used by this project
 LIBS = 
 # General compiler flags
-COMPILE_FLAGS = -flto -fopenmp -std=c++14 -O3 -Ofast -Wall
+COMPILE_FLAGS = -flto -std=c++14 -O3 -Ofast -Wall
 # Additional release-specific flags
 RCOMPILE_FLAGS =
 # Additional debug-specific flags
@@ -19,27 +19,13 @@ DCOMPILE_FLAGS =
 INCLUDES = -I $(SRC_PATH) -I./include/
 # General linker settings
 # static link
-LINK_FLAGS  = -flto -s -fopenmp -static -static-libgcc -static-libstdc++
+LINK_FLAGS  = -flto
 LINK_FLAGS += -L./staticlib/
-LINK_OBJS   = ./staticlib/libopencv_world430.a
+LINK_OBJS   = ./staticlib/libopencv_world.a
 LINK_OBJS  += ./staticlib/liblibjpeg-turbo.a
 LINK_OBJS  += ./staticlib/liblibpng.a
 LINK_OBJS  += ./staticlib/libzlib.a
-LINK_OBJS  += -lopengl32
-LINK_OBJS  += -lcomctl32
-LINK_OBJS  += -lcomdlg32
-LINK_OBJS  += -lgdi32
-LINK_OBJS  += -lgomp
-LINK_OBJS  += -limm32
-LINK_OBJS  += -lkernel32
-LINK_OBJS  += -llibjpeg-turbo
-LINK_OBJS  += -llibpng
-LINK_OBJS  += -lole32
-LINK_OBJS  += -lshell32
-LINK_OBJS  += -luser32
-LINK_OBJS  += -lwinmm
-LINK_OBJS  += -lwinspool
-LINK_OBJS  += -lz
+LINK_OBJS  += -llibjpeg-turbo -llibpng -lzlib -framework Cocoa -framework OpenCL -lm -ldl
 
 # Additional release-specific linker settings
 RLINK_FLAGS =
