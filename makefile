@@ -8,9 +8,9 @@ SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
 SRC_PATH = ./src
 # Space-separated pkg-config libraries used by this project
-LIBS = 
+LIBS =
 # General compiler flags
-COMPILE_FLAGS = -flto -std=c++14 -O3 -Ofast -Wall
+COMPILE_FLAGS = -flto -std=c++17 -O3 -Ofast -Wall
 # Additional release-specific flags
 RCOMPILE_FLAGS =
 # Additional debug-specific flags
@@ -32,9 +32,9 @@ RLINK_FLAGS =
 # Additional debug-specific linker settings
 DLINK_FLAGS =
 # Destination directory, like a jail or mounted system
-DESTDIR = 
+DESTDIR =
 # Install path (bin/ is appended automatically)
-INSTALL_PREFIX = 
+INSTALL_PREFIX =
 #### END PROJECT SETTINGS ####
 
 # Optionally you may move the section above to a separate config.mk file, and
