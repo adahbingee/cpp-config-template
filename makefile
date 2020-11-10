@@ -21,7 +21,7 @@ INCLUDES = -I $(SRC_PATH) -I./include/
 # static link
 LINK_FLAGS  = -flto -s -fopenmp -static -static-libgcc -static-libstdc++
 LINK_FLAGS += -L./staticlib/
-LINK_OBJS   = ./staticlib/libopencv_world430.a
+LINK_OBJS   = ./staticlib/libopencv_world3412.a
 LINK_OBJS  += ./staticlib/liblibjpeg-turbo.a
 LINK_OBJS  += ./staticlib/liblibpng.a
 LINK_OBJS  += ./staticlib/libzlib.a
